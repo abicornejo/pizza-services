@@ -12,7 +12,7 @@ class Product extends Model
     protected $primaryKey='pizzaId';
     public $timestamps = false;
     protected $fillable = [
-        'name', 'description','image','price','stock','minimum_stock', 'creationDate','status'
+        'name', 'description','image','price','stock','minimum_stock','ingredients', 'creationDate','status'
     ];
     
 }

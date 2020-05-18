@@ -25,29 +25,29 @@ class ProductController extends Controller
             $total = 0;
             $data = null;
 
-            $data=DB::table('purchase_detail pd')
-                ->join('purchase pu','pd.purchaseId','=','pu.purchaseId')
-                ->join('pizza p','pd.pizzaId','=','p.pizzaId')
-                ->join('size_pizza sp','pd.sizePizzaId','=','sp.sizePizzaId')
-                ->join('size s','sp.sizeId','=','s.sizeId')
+            $data=DB::table('purchase_detail as pd')
+                ->join('purchase as pu','pd.purchaseId','=','pu.purchaseId')
+                ->join('pizza as p','pd.pizzaId','=','p.pizzaId')
+                ->join('size_pizza as sp','pd.sizePizzaId','=','sp.sizePizzaId')
+                ->join('size as s','sp.sizeId','=','s.sizeId')
                 ->select('pu.purchaseId',
                     'pu.clientId',
                     'pd.quantity',
-                    'p.name',
-                    'p.image',
+                    'p.name as pizza',
+                    'p.image','p.ingredients',
                     's.name',
-                    'sp.price',
-                    'sp.euroPrice')
+                    'sp.price as purchasePrice',
+                    'sp.euroPrice as amountEuro')
                 ->where('pu.purchaseId','=',$id);
 
             $total = $data->count();
 
-            if($search !=""  && $search !=null && $search !="null"){
-
-                $data = $data->where('p.name','LIKE','%'.$search.'%');
-                $total = $data->count();
-
-            }
+//            if($search !=""  && $search !=null && $search !="null"){
+//
+//                $data = $data->where('p.name','LIKE','%'.$search.'%');
+//                $total = $data->count();
+//
+//            }
             $data = $data->skip($skip)->take($take)->get();
 
             $response = [
@@ -147,7 +147,9 @@ class ProductController extends Controller
         try{
           $data = DB::table('size_pizza as sp')
           ->join('size as s','sp.sizeId','=','s.sizeId')
-          ->select('sp.sizePizzaId','s.name','sp.price','sp.deliveryCost','sp.euroPrice')
+          ->join('pizza as p','sp.pizzaId','=','p.pizzaId')
+          ->select('sp.sizePizzaId','s.name','sp.price','sp.deliveryCost','sp.euroPrice','p.ingredients')
+
           ->where('sp.pizzaId','=', $id)->get();
           
 

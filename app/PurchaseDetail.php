@@ -12,7 +12,6 @@ class PurchaseDetail extends Model
     protected $primaryKey='detailId';
     public $timestamps = false;
     protected $fillable = [
-        'pizzaId', 'purchaseId','quantity','sizePizzaId','purchasePrice','status'
-    ];
+        'pizzaId', 'purchaseId','quantity','purchasePrice','status','sizePizzaId'];
     
 }

@@ -12,7 +12,7 @@ class Purchase extends Model
     protected $primaryKey='purchaseId';
     public $timestamps = false;
     protected $fillable = [
-        'clientId', 'paymentId','purchaseAmount','purchaseDate','status'
+        'clientId', 'paymentId','purchaseAmount','subtotal','costDelivery','purchaseDate','status'
     ];
     
 }
